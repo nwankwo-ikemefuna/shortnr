@@ -16,3 +16,8 @@ const httpCodes = [
  * allowed response http codes
  */
 export type THttpCode = typeof httpCodes[number];
+
+/**
+ * allowed random string pool types
+ */
+export type TRandomStringPool = 'num' | 'alpha' | 'alphanum';

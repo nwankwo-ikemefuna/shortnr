@@ -41,7 +41,7 @@ export interface ICommonConfig {
     env: string;
     appName: string;
     baseUrl: string;
-    shortnrUrl: string;
+    domain: string;
 }
 
 /**

@@ -3,10 +3,15 @@
 import { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import Joi from 'joi';
-import { IResponseInfo } from '../../../@types/app';
-import { responseObject } from '../../../helpers/utils';
+import { IResponseInfo, IStrObject } from '../../../@types/app';
+import config from '../../../config/global';
+import { generateRandomString, responseObject } from '../../../helpers/utils';
 import { joiValidate } from '../../../wrappers/joi';
 import { IUrlData, TUrlStat } from '../@types/urlInterface';
+
+
+//this guy will hold our encoded urls in memory
+let encodedUrls: IStrObject= {};
 
 
 /**
@@ -15,13 +20,22 @@ import { IUrlData, TUrlStat } from '../@types/urlInterface';
  * @param {Response} res - response object
  */
 export const encodeUrl = async(req: Request, res: Response) => {
-	const { url } = req.body;
-	//TODO: add url encoding logic
-	const shortUrl = 'xyx'; //placeholder
-	const data: IUrlData = { 
-		originalUrl: url, 
-		shortUrl 
-	};
+	const originalUrl = req.body.url;
+	
+	//check if url already has short url
+	let urlPath;
+	const exists = Object.values(encodedUrls).includes(originalUrl);
+	if (exists) {
+		urlPath = Object.keys(encodedUrls).find(key => encodedUrls[key] === originalUrl);
+	} else {
+		//generate 6 random alphanumeric characters to be as url path for the short url
+		urlPath = generateRandomString(6, 'alphanum');
+		//map url path to original url and store in memory
+		encodedUrls = { ...encodedUrls, ...{ [urlPath]: originalUrl } };
+	}
+	const shortUrl = `${config.common.domain}/${urlPath}`;
+	const data: IUrlData = { originalUrl, shortUrl };
+	
 	return responseObject(res, 200, true, data);
 };
 
