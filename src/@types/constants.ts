@@ -18,6 +18,11 @@ const httpCodes = [
 export type THttpCode = typeof httpCodes[number];
 
 /**
+ * allowed web protocols
+ */
+export type TWebProtocol = 'http' | 'https';
+
+/**
  * allowed random string pool types
  */
 export type TRandomStringPool = 'num' | 'alpha' | 'alphanum';

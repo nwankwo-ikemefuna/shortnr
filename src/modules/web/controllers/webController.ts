@@ -2,12 +2,15 @@
 
 import { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
+import { URL } from 'url';
 import Joi from 'joi';
+import _ from 'lodash';
 import { IResponseInfo, IStrObject } from '../../../@types/app';
 import config from '../../../config/global';
 import { generateRandomString, responseObject } from '../../../helpers/utils';
 import { joiValidate } from '../../../wrappers/joi';
 import { IUrlData, TUrlStat } from '../@types/urlInterface';
+import { TWebProtocol } from '../../../@types/constants';
 
 
 //this guy will hold our encoded urls in memory
@@ -23,10 +26,10 @@ export const encodeUrl = async(req: Request, res: Response) => {
 	const originalUrl = req.body.url;
 	
 	//check if url already has short url
-	let urlPath;
+	let urlPath = '';
 	const exists = Object.values(encodedUrls).includes(originalUrl);
 	if (exists) {
-		urlPath = Object.keys(encodedUrls).find(key => encodedUrls[key] === originalUrl);
+		urlPath = Object.keys(encodedUrls).find(key => encodedUrls[key] === originalUrl)!;
 	} else {
 		//generate 6 random alphanumeric characters to be as url path for the short url
 		urlPath = generateRandomString(6, 'alphanum');
@@ -34,7 +37,7 @@ export const encodeUrl = async(req: Request, res: Response) => {
 		encodedUrls = { ...encodedUrls, ...{ [urlPath]: originalUrl } };
 	}
 	const shortUrl = `${config.common.domain}/${urlPath}`;
-	const data: IUrlData = { originalUrl, shortUrl };
+	const data: IUrlData = { urlPath, shortUrl, originalUrl };
 	
 	return responseObject(res, 200, true, data);
 };
@@ -50,12 +53,12 @@ export const decodeUrl = async(req: Request, res: Response) => {
 	const urlSegments = shortUrl.split('/');
 	const [ urlPath ] = urlSegments.slice(-1); //last item
 	
-	//ensure url path exists in memorey
+	//ensure url path exists in memory
 	if (urlPath in encodedUrls === false) {
 		return responseObject(res, 404, false, null, 'Short URL not found!');
 	} 
 	const originalUrl = encodedUrls[urlPath];
-	const data: IUrlData = { originalUrl, shortUrl };
+	const data: IUrlData = { urlPath, shortUrl, originalUrl };
 	
 	return responseObject(res, 200, true, data);
 };
@@ -67,14 +70,32 @@ export const decodeUrl = async(req: Request, res: Response) => {
  * @param {Response} res - response object
  */
 export const urlStatistics = async(req: Request, res: Response) => {
-	// const { path } = req.params;
-	//TODO: add stats data as defined in url stats interface
+	const { urlPath } = req.params;
+
+	//ensure url path exists in memory
+	if (urlPath in encodedUrls === false) {
+		return responseObject(res, 404, false, null, 'URL path not found!');
+	} 
+	
+	const originalUrl = encodedUrls[urlPath];
+	const shortUrl = `${config.common.domain}/${urlPath}`;
+
+	const urlObject = new URL(originalUrl);
 	const data: TUrlStat = { 
-		originalUrl: 'xyz',
-		shortUrl: 'xyz',
-		scheme: 'http',
-		host: 'example.com',
+		urlPath,
+		shortUrl,
+		originalUrl,
+		protocol: <TWebProtocol>urlObject.protocol,
+		origin: urlObject.origin,
+		host: urlObject.host,
+		port: parseInt(urlObject.port),
+		username: urlObject.username,
+		password: urlObject.password,
+		pathname: urlObject.pathname,
+		query: urlObject.search,
+		fragment: urlObject.hash
 	}
+
 	return responseObject(res, 200, true, data);
 };
 

@@ -7,6 +7,6 @@ import { validateUrlData, encodeUrl, decodeUrl, urlStatistics } from '../control
 
 router.post("/encode", validateUrlData, encodeUrl);
 router.post("/decode", validateUrlData, decodeUrl);
-router.get("/statistics/:path", urlStatistics);
+router.get("/statistics/:urlPath", urlStatistics);
 
 export default router;
