@@ -46,13 +46,17 @@ export const encodeUrl = async(req: Request, res: Response) => {
  * @param {Response} res - response object
  */
 export const decodeUrl = async(req: Request, res: Response) => {
-	const { url } = req.body;
-	//TODO: add url decoding logic
-	const originalUrl = 'xyx'; //placeholder
-	const data: IUrlData = { 
-		originalUrl, 
-		shortUrl: url
-	};
+	const shortUrl = req.body.url;
+	const urlSegments = shortUrl.split('/');
+	const [ urlPath ] = urlSegments.slice(-1); //last item
+	
+	//ensure url path exists in memorey
+	if (urlPath in encodedUrls === false) {
+		return responseObject(res, 404, false, null, 'Short URL not found!');
+	} 
+	const originalUrl = encodedUrls[urlPath];
+	const data: IUrlData = { originalUrl, shortUrl };
+	
 	return responseObject(res, 200, true, data);
 };
 
