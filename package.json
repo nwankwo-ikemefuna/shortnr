@@ -1,0 +1,50 @@
+{
+  "name": "shortnr",
+  "version": "1.0.0",
+  "description": "Awesome URL Shortening Service",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "clean": "rm -rf dist && mkdir dist",
+    "build-babel": "tsc && babel src --out-dir dist --extensions .ts",
+    "build": "npm run clean && npm run build-babel",
+    "build-project": "npm run build",
+    "start": "npm run build-project && node dist/index.js",
+    "test": "mocha --require @babel/register"
+  },
+  "author": "Ikemefuna Nwankwo",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.13.10",
+    "@babel/runtime": "^7.13.10",
+    "@types/joi": "^17.2.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^4.6.0",
+    "joi": "^17.4.1",
+    "lodash": "^4.17.21",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/node": "^7.13.0",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@babel/register": "^7.13.10",
+    "@types/cors": "^2.8.12",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
+    "@types/helmet": "^4.0.0",
+    "@types/lodash": "^4.14.171",
+    "@types/node": "^16.3.2",
+    "@types/winston": "^2.4.4",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.4.0",
+    "nodemon": "^2.0.7",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  }
+}
