@@ -4,13 +4,12 @@ import { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import { URL } from 'url';
 import Joi from 'joi';
-import _ from 'lodash';
-import { IResponseInfo, IStrObject } from '../../../@types/app';
-import config from '../../../config/global';
-import { generateRandomString, responseObject } from '../../../helpers/utils';
-import { joiValidate } from '../../../wrappers/joi';
-import { IUrlData, TUrlStat } from '../@types/urlInterface';
-import { TWebProtocol } from '../../../@types/constants';
+import { IResponseInfo, IStrObject } from '../../../@types/app.type';
+import config from '../../../config/global.config';
+import { generateRandomString, responseObject } from '../../../helpers/utils.helper';
+import { joiValidate } from '../../../wrappers/joi.wrapper';
+import { IUrlData, TUrlStat } from '../@types/url.type';
+import { TWebProtocol } from '../../../@types/constants.type';
 
 
 //this guy will hold our encoded urls in memory
@@ -31,7 +30,7 @@ export const encodeUrl = async(req: Request, res: Response) => {
 	if (exists) {
 		urlPath = Object.keys(encodedUrls).find(key => encodedUrls[key] === originalUrl)!;
 	} else {
-		//generate 6 random alphanumeric characters to be as url path for the short url
+		//generate 6 random alphanumeric characters to be used as url path for the short url
 		urlPath = generateRandomString(6, 'alphanum');
 		//map url path to original url and store in memory
 		encodedUrls = { ...encodedUrls, ...{ [urlPath]: originalUrl } };
@@ -101,7 +100,7 @@ export const urlStatistics = async(req: Request, res: Response) => {
 
 
 /**
- * Validate url data
+ * Validate url data middleware
  * called before encode/decode operations.
  * @param {Request} req - request object
  * @param {Response} res - response object
@@ -115,7 +114,7 @@ export const validateUrlData = async(req: Request, res: Response, next: NextFunc
 	const payload = req.body;
 	let validate = joiValidate(schema, payload);
 	if (validate !== true) {
-		//validation fails, return error
+		//validation fails, return error to client
 		const { rCode, rStatus, rMessage }: IResponseInfo = validate;
 		return responseObject(res, rCode, rStatus, null, rMessage);
 	}

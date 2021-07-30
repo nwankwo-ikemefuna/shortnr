@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Awesome URL Shortening Service",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts",
+    "dev": "nodemon --exec ts-node src/app.ts",
     "clean": "rm -rf dist && mkdir dist",
     "build-babel": "tsc && babel src --out-dir dist --extensions .ts",
     "build": "npm run clean && npm run build-babel",
     "build-project": "npm run build",
-    "start": "npm run build-project && node dist/index.js",
-    "test": "mocha --require @babel/register"
+    "start": "npm run build-project && node dist/app.js",
+    "test": "NODE_ENV=test && mocha --require @babel/register"
   },
   "author": "Ikemefuna Nwankwo",
   "license": "ISC",

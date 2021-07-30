@@ -6,7 +6,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 // middlewares
-import error from './middlewares/error';
+import error from './middlewares/error.middleware';
 
 const app = express();
 

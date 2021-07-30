@@ -2,8 +2,8 @@
 
 import { Response } from 'express';
 import _ from 'lodash';
-import { IAnyObject, IResponseInfo } from '../@types/app';
-import { THttpCode, TRandomStringPool } from '../@types/constants';
+import { IAnyObject, IResponseInfo } from '../@types/app.type';
+import { THttpCode, TRandomStringPool } from '../@types/constants.type';
 
 
 /**

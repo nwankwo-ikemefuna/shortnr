@@ -5,7 +5,7 @@ import winston from 'winston';
 
 const env = process.env.NODE_ENV || "development";
 
-import { responseObject } from '../helpers/utils';
+import { responseObject } from '../helpers/utils.helper';
 
 
 const logsDir = __dirname + '/../../logs';

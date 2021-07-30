@@ -1,4 +1,4 @@
-import { THttpCode } from "./constants";
+import { THttpCode } from "./constants.type";
 /** 
  * pick some required properties from an SSOT interface, while leaving the rest optional
  */
@@ -52,4 +52,5 @@ export interface IGlobalConfig {
     common: ICommonConfig;
     development: IAnyObject;
     production: IAnyObject;
+    test: IAnyObject;
 }

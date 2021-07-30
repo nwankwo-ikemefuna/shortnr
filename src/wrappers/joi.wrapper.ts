@@ -1,14 +1,14 @@
 "use strict";
 
 import { Schema, ValidationResult, ValidationErrorItem, Context } from "joi";
-import { IAnyObject } from "../@types/app";
-import { responseInfo } from "../helpers/utils";
+import { IAnyObject } from "../@types/app.type";
+import { responseInfo } from "../helpers/utils.helper";
 
 
 /**
- * Customize joi error message
+ * validate payload with joi
  * @param {Schema} schema - joi schema
- * @param {Schema} payload - request payload to be validated
+ * @param {IAnyObject} payload - request payload to be validated
  * @return {string}
  */
 export const joiValidate = (schema: Schema, payload: IAnyObject) => {

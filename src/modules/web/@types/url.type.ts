@@ -1,5 +1,5 @@
-import { IAnyObject } from "../../../@types/app";
-import { TWebProtocol } from "../../../@types/constants";
+import { IAnyObject } from "../../../@types/app.type";
+import { TWebProtocol } from "../../../@types/constants.type";
 
 /**
  * interface for encoded/decoded url data
