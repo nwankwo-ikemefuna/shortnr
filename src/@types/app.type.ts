@@ -40,7 +40,6 @@ export interface IResponseInfo {
 export interface ICommonConfig {
     env: string;
     appName: string;
-    baseUrl: string;
     domain: string;
 }
 
