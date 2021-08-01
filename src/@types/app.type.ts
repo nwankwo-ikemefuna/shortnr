@@ -54,3 +54,18 @@ export interface IGlobalConfig {
     production: IAnyObject;
     test: IAnyObject;
 }
+
+/**
+ * test assertion props
+ */
+export interface IResDataAssertionProps {
+    check?: 'exists' | 'equal' | 'notEqual' | 'length' | null;
+    value?: string | number | boolean;
+}
+
+/**
+ * test assertion options
+ */
+export interface IResDataAssertions {
+    [key: string]: IResDataAssertionProps;
+}

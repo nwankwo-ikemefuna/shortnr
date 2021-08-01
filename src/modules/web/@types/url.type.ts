@@ -1,4 +1,3 @@
-import { IAnyObject } from "../../../@types/app.type";
 import { TWebProtocol } from "../../../@types/constants.type";
 
 /**
@@ -20,7 +19,7 @@ export type TUrlStat = IUrlData & {
     port?: number;
     username?: string;
     password?: string;
-    pathname?: string;
+    path?: string;
     query?: string; //after the question mark ?
     fragment?: string; //after the hashmark #
 }
