@@ -18,15 +18,10 @@ const logger = winston.createLogger({
         // - Write all logs with level `error` and below to `error.log`
         new winston.transports.File({ filename: `${logsDir}/error.log`, level: 'error' })
     ],
-    //TODO: uncomment these guys when done
     //uncaught exceptions
-    /* exceptionHandlers: [
+    exceptionHandlers: [
         new winston.transports.File({ filename: `${logsDir}/exception.log` })
-    ],
-    //unhandled promise rejections
-    rejectionHandlers: [
-        new winston.transports.File({ filename: `${logsDir}/exception.log` })
-    ] */
+    ]
 });
 
 // If we're not in production then log to the `console` with the format:

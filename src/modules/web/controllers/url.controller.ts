@@ -53,6 +53,10 @@ export const decodeUrl = (req: Request, res: Response) => {
 export const urlStatistics = (req: Request, res: Response) => {
 	const { urlPath } = req.params;
 
+	if (!urlPath) {
+		return responseObject(res, 400, false, null, 'URL path missing in URL!');
+	}
+
 	//ensure url path exists in memory
 	const encodedUrls = getAllUrls();
 	if (urlPath in encodedUrls === false) {
