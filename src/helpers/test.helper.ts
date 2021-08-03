@@ -1,4 +1,5 @@
 import chai from 'chai';
+import chaiHttp from 'chai-http';
 import _ from 'lodash';
 import { IAnyObject } from '../@types/app.type';
 import { THttpCode } from '../@types/constants.type';
@@ -7,6 +8,8 @@ const expect = chai.expect;
 const should = chai.should();
 
 import server from '../app';
+
+chai.use(chaiHttp);
 
 
 /**
