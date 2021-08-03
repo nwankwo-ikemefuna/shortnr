@@ -18,7 +18,7 @@ export const getAllUrls = () => {
 
 
 /**
- * Get one one url map
+ * Get one url map
  * @param {string} urlPath - the url path from the encoded url
  */
 export const getOneUrl = (urlPath: string) => {
@@ -50,6 +50,10 @@ export const saveUrl = (payload: IAnyObject) => {
 }
 
 
+/**
+ * Get url statistics
+ * @param {string} urlPath - url path
+ */
 export const getUrlStatistics = (urlPath: string) => {
     const { originalUrl, shortUrl } = getOneUrl(urlPath);
     //parse original url to an object 

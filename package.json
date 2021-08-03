@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Awesome URL Shortening Service",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev && nodemon --exec ts-node src/app.ts",
+    "dev": "cross-env NODE_ENV=development && nodemon --exec ts-node src/app.ts",
     "clean": "rm -rf dist && mkdir dist",
     "build-babel": "tsc && babel src --out-dir dist --extensions .ts",
     "build": "npm run clean && npm run build-babel",
