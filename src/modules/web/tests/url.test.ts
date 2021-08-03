@@ -1,11 +1,7 @@
 import faker from 'faker';
-import chai from 'chai';
-import chaiHttp from 'chai-http';
 import { IResDataAssertions } from '../../../@types/test.type';
 import { testBadGetRequest, testBadPostRequest, testGoodGetRequest, testGoodPostRequest } from '../../../helpers/test.helper';
 import { saveUrl } from '../models/url.model';
- 
-chai.use(chaiHttp);
 
  
 describe('URL Shortening Service', () => {
